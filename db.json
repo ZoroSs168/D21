@@ -1,0 +1,58 @@
+{
+  "products": [
+    {
+      "title": "nhat123",
+      "price": "8273",
+      "image": "https://gundamvietnamhome.files.wordpress.com/2019/01/gundam-calendar-2019-scan01.jpg?w=940",
+      "brand": "opp",
+      "id": 17
+    },
+    {
+      "title": "nhat ",
+      "price": "3216665",
+      "image": "https://gstatic.gvn360.com/2020/07/Gearvn_gundam_-3-scaled.jpg",
+      "brand": "oppp",
+      "quantity": 1,
+      "id": 18
+    },
+    {
+      "title": "Quần âu",
+      "price": "120000",
+      "image": "https://360.com.vn/wp-content/uploads/2024/01/QASTK410-2-Custom.jpg",
+      "description": "ok",
+      "brand": "Peri",
+      "id": 19
+    },
+    {
+      "title": "nhat",
+      "price": "1",
+      "image": "https://360.com.vn/wp-content/uploads/2024/01/QASTK410-1-Custom.jpg",
+      "description": "ok",
+      "brand": "ok",
+      "id": 20
+    }
+  ],
+  "users": [
+    {
+      "email": "manh@gmail.com",
+      "password": "$2a$10$Cd1hYdVvleNHb8eX8weY6OBd21crkoTGHw/Id5kDfqx0xYaocP2Jq",
+      "username": "nhat",
+      "confirmPassword": "123456",
+      "id": 1
+    },
+    {
+      "email": "nhatnvph31152@fpt.edu.vn",
+      "password": "$2a$10$xKJ4F6uhOxVjO9VTVOtnYuXd.BFeHkxWMm.Avg7CGnA0f4KN/YLEq",
+      "username": "ph31152",
+      "confirmPassword": "123456",
+      "id": 2
+    },
+    {
+      "email": "huongttfpt1234@gmail.com",
+      "password": "$2a$10$fzzR.Y9BYVXHtD7Sp25C7OrnBXLl5fT8vutCeoHbMJpCVO9H.PDLK",
+      "username": "admin",
+      "confirmPassword": "123456",
+      "id": 3
+    }
+  ]
+}
