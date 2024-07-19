@@ -40,7 +40,7 @@ function Header() {
           />
         </Stack>
         <Stack direction="row" spacing={4}>
-         <Link to="/Register"> <Button variant="text" sx={{color: "white"}} startIcon={<HowToRegIcon />}>
+         <Link to="/register"> <Button variant="text" sx={{color: "white"}} startIcon={<HowToRegIcon />}>
             Register | Login
           </Button></Link>
          <Link to="/"> <Button variant="text" sx={{color: "white"}} startIcon={<ShoppingCartIcon />}>

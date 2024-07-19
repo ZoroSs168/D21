@@ -34,24 +34,24 @@
   ],
   "users": [
     {
-      "email": "manh@gmail.com",
-      "password": "$2a$10$Cd1hYdVvleNHb8eX8weY6OBd21crkoTGHw/Id5kDfqx0xYaocP2Jq",
-      "username": "nhat",
-      "confirmPassword": "123456",
+      "email": "dunglntph31303@fpt.edu.vn",
+      "password": "$2a$10$gTbyRwQxUtDifgNzDdnhfeOT0ZmPC8.CwqFIkn3sn0eDuHGqvByxu",
+      "username": "admin",
+      "confirmPassword": "123123",
       "id": 1
     },
     {
-      "email": "nhatnvph31152@fpt.edu.vn",
-      "password": "$2a$10$xKJ4F6uhOxVjO9VTVOtnYuXd.BFeHkxWMm.Avg7CGnA0f4KN/YLEq",
-      "username": "ph31152",
-      "confirmPassword": "123456",
+      "email": "bimbimbim@gmail.com",
+      "password": "$2a$10$JfKFeANniN213UUXDMO7mODSEIxIcdXxT8lnOXQSNSJsRmQ6WRIeC",
+      "username": "dunglntph31303",
+      "confirmPassword": "123123",
       "id": 2
     },
     {
-      "email": "huongttfpt1234@gmail.com",
-      "password": "$2a$10$fzzR.Y9BYVXHtD7Sp25C7OrnBXLl5fT8vutCeoHbMJpCVO9H.PDLK",
-      "username": "admin",
-      "confirmPassword": "123456",
+      "email": "bimltv10@gmail.com",
+      "password": "$2a$10$wTZRd/1vWZcUZEkUNJi3s.zc4H4drDSKHEK6KsxcHaK9qt7J8jdva",
+      "username": "VN001",
+      "confirmPassword": "123123",
       "id": 3
     }
   ]

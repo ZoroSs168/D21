@@ -7,10 +7,13 @@ import {
   Grid,
   TextField,
   Typography,
+  Box,
+  CircularProgress
 } from "@mui/material";
 import axios from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from 'react-router-dom';
+import { useState } from "react";
 
 type LoginForm = {
   email: string; 
@@ -25,85 +28,98 @@ export default function Login() {
   } = useForm<LoginForm>();
 
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const onSubmit: SubmitHandler<LoginForm> = async (data) => {
+    setLoading(true);
     try {
-      const res= await axios.post("http://localhost:3000/login", data);
+      const res = await axios.post("http://localhost:3000/login", data);
       const user = res.data;
       console.log(user);
-      localStorage.setItem("token", res.data.accessToken);
-      localStorage.setItem("user",JSON.stringify(res.data.user));
+      localStorage.setItem("accessToken", res.data.accessToken);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
       navigate("/admin");
       alert("Đăng nhập thành công");
     } catch (error) {
-      alert("Thất bại");
-      console.error("Error",data);
+      alert("Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
+      console.error("Error", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  return (
-    <>
+  return (<>
     <Container component="main" maxWidth="xs">
-    <Grid container component="main">
-        <CssBaseline />
-        <div>
-          <Typography  textAlign={'center'} fontWeight={'bold'} fontSize={50} variant="h5">
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Typography component="h1" variant="h5" textAlign={'center'} fontWeight={'bold'} fontSize={30}>
           Log in
-          </Typography>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              id="email" 
-              {...register("email", {
-                required: "Email không được để trống",
-              })}
-              error={!!errors.email}
-              helperText={errors.email?.message}
-              label="Email" 
-              name="email" 
-              autoFocus
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              label="Password"
-              {...register("password", {
-                required: "Password không được để trống",
-              })}
-              error={!!errors.password}
-              helperText={errors.password?.message}
-              name="password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <Grid sx={{ textAlign: "left", marginBottom: "10px" }}>
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-            </Grid>
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1 }}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            id="email" 
+            {...register("email", {
+              required: "Email không được để trống",
+              pattern: {
+                value: /^\S+@\S+$/i,
+                message: "Email không hợp lệ"
+              }
+            })}
+            error={!!errors.email}
+            helperText={errors.email?.message}
+            label="Email" 
+            name="email" 
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            label="Password"
+            {...register("password", {
+              required: "Password không được để trống",
+            })}
+            error={!!errors.password}
+            helperText={errors.password?.message}
+            name="password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+          />
+          <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="Remember me"
+          />
+          <Box sx={{ position: 'relative' }}>
             <Button
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
+              disabled={loading}
             >
-              Sign In
+              {loading ? <CircularProgress size={24} /> : "Sign In"}
             </Button>
-            <Grid container>
-              <Grid item>
-                <Link to="/Register">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
+          </Box>
+          <Grid container>
+            <Grid item>
+              <Link to="/register">
+                {"Don't have an account? Sign Up"}
+              </Link>
             </Grid>
-          </form>
-        </div>
-      </Grid>
+          </Grid>
+        </Box>
+      </Box>
     </Container>
     </>
   );
