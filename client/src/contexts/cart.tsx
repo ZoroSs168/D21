@@ -22,29 +22,32 @@ interface CartProviderProps {
 }
 
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
-  const [cart, setCart] = useState<Cart | null>(null); ({ products: [] })
-  //ham them 
+  const [cart, setCart] = useState<Cart | null>(null);
+  ({ products: [] });
+  //ham them
   const addtoCart = (product: Product) => {
     console.log(product);
-    
-    setCart(prevCart => {
+
+    setCart((prevCart) => {
       if (prevCart) {
-        const setProduct = prevCart.products.find(item => item.product._id === product._id)
+        const setProduct = prevCart.products.find(
+          (item) => item.product._id === product._id
+        );
         if (setProduct) {
-            return prevCart
+          return prevCart;
         } else {
           return {
             ...prevCart,
-            products:[...prevCart.products,{product,quantity:1}]
-          }
+            products: [...prevCart.products, { product, quantity: 1 }],
+          };
         }
       }
-      return prevCart
-    })
-  }
+      return prevCart;
+    });
+  };
 
   return (
-    <CartContext.Provider value={{ cart, setCart,addtoCart }}>
+    <CartContext.Provider value={{ cart, setCart, addtoCart }}>
       {children}
     </CartContext.Provider>
   );
