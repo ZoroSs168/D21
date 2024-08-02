@@ -5,18 +5,20 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-  Typography,
   Stack,
+  Typography,
 } from "@mui/material";
 import { Product } from "src/types/Product";
 import { Link } from "react-router-dom";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import { useCart } from "src/contexts/cart";
 
 type ProductCardProps = {
   product: Product;
 };
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
+  const { addtoCart } = useCart();
   return (
     <Card
       sx={{
@@ -49,27 +51,18 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Stack direction="row" spacing={2} width="100%">
-          <Button
-            size="small"
-            startIcon={<AddShoppingCartIcon />}
-            variant="outlined"
-            color="primary"
-            sx={{ flexGrow: 1 }}
-          >
-            Add to cart
-          </Button>
-          <Button
-            size="small"
-            variant="contained"
-            color="primary"
-            component={Link}
-            to={`/product/${product._id}`}
-            sx={{ flexGrow: 1 }}
-          >
+        <Button
+          size="small"
+          startIcon={<AddShoppingCartIcon />}
+          onClick={() => addtoCart(product)}
+        >
+          Add to cart
+        </Button>
+        <Link to={`/product/${product._id}`}>
+          <Button size="small" variant="contained">
             Detail
           </Button>
-        </Stack>
+        </Link>
       </CardActions>
     </Card>
   );
