@@ -5,14 +5,15 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+
   Stack,
+
   Typography,
 } from "@mui/material";
 import { Product } from "src/types/Product";
 import { Link } from "react-router-dom";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { useCart } from "src/contexts/cart";
-
 type ProductCardProps = {
   product: Product;
 };
@@ -20,30 +21,17 @@ type ProductCardProps = {
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const { addtoCart } = useCart();
   return (
-    <Card
-      sx={{
-        maxWidth: 345,
-        borderRadius: 2,
-        boxShadow: 3,
-        overflow: "hidden",
-        transition: "transform 0.3s ease-in-out",
-        "&:hover": {
-          transform: "scale(1.05)",
-        },
-      }}
-    >
+    <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         component="img"
-        alt={product.title}
-        height="200"
+        alt="green iguana"
+        height="140"
+        width="200"
         image={product.image}
-        sx={{ objectFit: "contain", backgroundColor: "#f5f5f5" }}
+        sx={{ objectFit: "contain" }}
       />
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {product.title}
-        </Typography>
-        <Typography variant="h6" color="primary" component="div">
+        <Typography  gutterBottom variant="h5" component="div">
           {product.price}$
         </Typography>
         <Typography variant="body2" color="text.secondary">
@@ -51,6 +39,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
         </Typography>
       </CardContent>
       <CardActions>
+
         <Button
           size="small"
           startIcon={<AddShoppingCartIcon />}
@@ -58,6 +47,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
         >
           Add to cart
         </Button>
+
         <Link to={`/product/${product._id}`}>
           <Button size="small" variant="contained">
             Detail

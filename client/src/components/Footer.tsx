@@ -1,25 +1,28 @@
 import { Box, Container, Grid, Link, Typography } from "@mui/material";
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import TwitterIcon from '@mui/icons-material/Twitter';
 
 function Footer() {
   return (
     <Box
       component="footer"
       sx={{
-        py: 3,
-        bgcolor: "#1976D2",
-        color: "#fff",
+        py: 5,
+        bgcolor: "#fff",
+        color: "#000",
         mt: 'auto',
-        borderTop: '1px solid #444',
+        borderTop: '1px solid #ccc',
       }}
     >
       <Container maxWidth="lg">
-        <Grid container spacing={3}>
+        <Grid container spacing={4}>
           <Grid item xs={12} sm={6} md={4}>
             <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
-              Tên Công Ty
+              D21 Shop
             </Typography>
             <Typography variant="body2" component="p">
-              Mô tả ngắn gọn về công ty của bạn và những gì nó làm. Bạn có thể thêm thông tin liên hệ hoặc các dịch vụ chính ở đây.
+              D21 là một thương hiệu thời trang hàng đầu chuyên cung cấp các sản phẩm áo quần thời trang phong cách và chất lượng, giúp bạn tự tin thể hiện cá tính và phong cách riêng.
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -27,23 +30,18 @@ function Footer() {
               Liên Kết
             </Typography>
             <Grid container spacing={1}>
-              <Grid item>
-                <Link href="#" color="inherit" underline="hover">
+              <Grid item xs={12}>
+                <Link href="#" color="inherit" underline="hover" sx={{ color: "#000", display: 'block', mb: 1 }}>
                   Trang Chủ
                 </Link>
               </Grid>
-              <Grid item>
-                <Link href="#" color="inherit" underline="hover">
+              <Grid item xs={12}>
+                <Link href="#" color="inherit" underline="hover" sx={{ color: "#000", display: 'block', mb: 1 }}>
                   Sản Phẩm
                 </Link>
               </Grid>
-              <Grid item>
-                <Link href="#" color="inherit" underline="hover">
-                  Về Chúng Tôi
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" color="inherit" underline="hover">
+              <Grid item xs={12}>
+                <Link href="#" color="inherit" underline="hover" sx={{ color: "#000", display: 'block', mb: 1 }}>
                   Liên Hệ
                 </Link>
               </Grid>
@@ -51,30 +49,30 @@ function Footer() {
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
-              Theo Dõi Chúng Tôi
+              Mạng Xã Hội
             </Typography>
             <Grid container spacing={1}>
               <Grid item>
-                <Link href="#" color="inherit" underline="hover">
-                  Facebook
+                <Link href="#" color="inherit" underline="hover" sx={{ color: "#000", mr: 1 }}>
+                  <FacebookIcon />
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" color="inherit" underline="hover">
-                  Instagram
+                <Link href="#" color="inherit" underline="hover" sx={{ color: "#000", mr: 1 }}>
+                  <InstagramIcon />
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" color="inherit" underline="hover">
-                  Twitter
+                <Link href="#" color="inherit" underline="hover" sx={{ color: "#000", mr: 1 }}>
+                  <TwitterIcon />
                 </Link>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
-        <Box mt={3} textAlign="center">
-          <Typography variant="body2" color="inherit">
-            &copy; {new Date().getFullYear()} Tên Công Ty. Mọi quyền được bảo lưu.
+        <Box mt={5} textAlign="center">
+          <Typography variant="body2" color="inherit" sx={{ color: "#000" }}>
+             D21. Những Chiếc Áo Xinh Xắn Đều Có Ở Đây.
           </Typography>
         </Box>
       </Container>
