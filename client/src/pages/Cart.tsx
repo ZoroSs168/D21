@@ -51,7 +51,7 @@ import {
                   direction={"row"}
                   justifyContent={"space-between"}
                   alignItems={"center"}
-                  bgcolor="gray"
+                  sx={{backgroundColor:"#FFF8E7"}}
                   padding={1}
                 >
                   <Typography fontWeight={500}>{index + 1}</Typography>
