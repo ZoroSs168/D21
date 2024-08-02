@@ -1,181 +1,188 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { CartItem, Product } from "src/types/Product";
+import { useState, useMemo } from "react";
 import {
-  Box,
-  Button,
-  Container,
-  Grid,
+  Badge,
   IconButton,
   Stack,
-  TextField,
+  styled,
   Typography,
+  Popover,
+  Box,
+  Divider,
 } from "@mui/material";
-import Loading from "src/components/Loading";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
+import SearchIcon from "@mui/icons-material/Search";
+import { Link } from "react-router-dom";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { useCart } from "src/contexts/cart";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { useProductCart } from "src/hooks/useProductCart";
-import Footer from "src/components/Footer";
 
-import StarRateIcon from "@mui/icons-material/StarRate";
-import Banner from "src/components/Banner";
+const menus = [
+  {
+    label: "Home",
+    link: "/",
+  },
+  {
+    label: "Shop",
+    link: "/shop",
+  },
+  {
+    label: "About",
+    link: "/about",
+  },
+  {
+    label: "Contact",
+    link: "/contact",
+  },
+];
 
-function ProductDetail() {
-  const { addToCart } = useProductCart();
+const Header = () => {
+  const { cart } = useCart();
+  const { removeToCart } = useProductCart();
+  const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
 
-  const { id } = useParams();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [product, setProduct] = useState<Product | undefined>();
-  const [quantity, setQuantity] = useState<number>(1);
-
-  const getProduct = async (id: string) => {
-    try {
-      setLoading(true);
-      const { data } = await axios.get(`http://localhost:3000/products/${id}`);
-      setProduct(data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-  useEffect(() => {
-    if (!id) return;
-    getProduct(id);
-  }, [id]);
-
-  const handleAddToCart = (product: Product) => {
-    if (quantity <= 0) return;
-    addToCart({ product, quantity });
-  };
-  return (
-    <>
-      <Banner page="Detail" />
-      <Loading isShow={loading} />
-      <Container>
-        <Grid 
-          container
-          spacing={2}
-          sx={{ margin: "0 auto", justifyContent: "center", padding:"30px 0 30px 0 " }}
-        >
-          <Grid item xs={7} spacing={5}>
-            <img src={product?.image} alt="" height={500} width={580} />
-          </Grid>
-          <Grid
-            item
-            xs={4}
-            sx={{
-              border: "1px solid #DDDDDD",
-              marginLeft: "10px",
-              bgcolor: "white",
-              borderRadius: "4px",
-            }}
-          >
-            {product && (
-              <Box sx={{ textAlign: "center" }}>
-                <Typography
-                  sx={{ marginBottom: 2, textAlign: "left" }}
-                  component="h1"
-                  fontSize={"26px"}
-                >
-                  Tên sản phẩm: {product.title}
-                </Typography>
-                <Typography
-                  sx={{
-                    marginBottom: 2,
-                    textAlign: "left",
-                    color: "black",
-                  }}
-                  fontWeight={"bold"}
-                  color={"Highlight"}
-                >
-                  Đánh giá sản phẩm
-                  <Box>
-                    <StarRateIcon sx={{ color: "yellow" }} />
-                    <StarRateIcon sx={{ color: "yellow" }} />
-                    <StarRateIcon sx={{ color: "yellow" }} />
-                    <StarRateIcon sx={{ color: "yellow" }} />
-                    <StarRateIcon sx={{ color: "#DDDDDD" }} />
-                  </Box>
-                </Typography>
-                <Typography
-                  sx={{
-                    marginBottom: 2,
-                    textAlign: "left",
-                    color: "black",
-                  }}
-                  fontWeight={"bold"}
-                  color={"Highlight"}
-                >
-                  Giá sản phẩm: ${product.price}
-                </Typography>
-                <Typography
-                  sx={{
-                    marginBottom: 2,
-                    textAlign: "left",
-                    color: "black",
-                  }}
-                  fontWeight={"bold"}
-                  color={"Highlight"}
-                >
-                  Mô tả: {product.description}
-                </Typography>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: "30px",
-                  }}
-                ></Box>
-
-                <Stack direction={"row"} gap={2} alignItems={"center"}>
-                <Button sx={{color:'black'}}
-                  onClick={() => setQuantity(quantity === 0 ? 0 : quantity - 1)}
-                >
-                  <RemoveIcon />
-                </Button >
-                <TextField style={{padding:'unset',width:'100px'}}
-                  id="outlined-basic"
-                  variant="outlined"
-                  type="number"
-                  value={quantity}
-                  onChange={(e) => setQuantity(Number(e.target.value))}
-                />
-                <Button sx={{color:'black'}} onClick={() => setQuantity(quantity + 1)}>
-                  <AddIcon />
-                </Button>
-              </Stack>
-                <Link to="/cart">
-                  <Button
-                    sx={{marginTop:"20px"}}
-                    variant="outlined"
-                    onClick={() => handleAddToCart(product)}
-                  >
-                    Add to cart
-                  </Button>
-                </Link>
-              </Box>
-            )}
-          </Grid>
-        </Grid>
-
-        
-
-        {/* <Typography>{product.description}</Typography> */}
-        {/* <Link to="/cart">
-              <Button
-                variant="outlined"
-                onClick={() => handleAddToCart(product)}
-              >
-                Add to cart
-              </Button>
-              </Link> */}
-      </Container>
-      <Footer></Footer>
-    </>
+  const cartQuantity = useMemo(
+    () =>
+      cart
+        ? cart.products.reduce((total, { quantity }) => total + quantity, 0)
+        : 0,
+    [cart]
   );
-}
+  const totalPrice = useMemo(
+    () =>
+      cart
+        ? cart.products.reduce(
+          (total, { product, quantity }) => total + product.price * quantity,
+          0
+        )
+        : 0,
+    [cart]
+  );
 
-export default ProductDetail;
+  const handlePopoverOpen = (event: React.MouseEvent<HTMLDivElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+
+  return (
+    <Wrapper
+      sx={{ padding: "0 50px" }}
+      direction={"row"}
+      justifyContent={"space-between"}
+      alignItems={"center"}
+    >
+      <img src="https://www.ikea.com/global/assets/logos/brand/ikea.svg" alt="logo" />
+      <Stack direction={"row"} gap={"75px"}>
+
+        {menus.map((menu, index) => (
+          <Link to={menu.link} key={index}>
+            <Typography fontWeight={"500"}>{menu.label}</Typography>
+          </Link>
+        ))}
+      </Stack>
+      <Stack gap={"45px"} direction={"row"}>
+        <Link to={"/login"}>
+          <img src="/user.svg" alt="user" />
+        </Link>
+        <SearchIcon />
+        <FavoriteBorderIcon />
+        <div onMouseEnter={handlePopoverOpen}
+          onMouseLeave={handlePopoverClose}
+
+
+        >
+          <Badge badgeContent={cartQuantity} color="secondary" >
+            <img src="/cart.svg" alt="cart" />
+          </Badge>
+          {/* //render */}
+          <Popover
+            id="mouse-over-popover"
+            open={open}
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+            onClose={handlePopoverClose}
+            disableRestoreFocus
+          >
+            {/* gio hang */}
+            <Box sx={{ p: 2, minWidth: 200 }}>
+              <Typography variant="h6" gutterBottom>
+                Giỏ hàng
+              </Typography>
+              <Divider />
+
+              <Stack direction={"row"} spacing={3} padding={1} fontWeight={600}>
+                <Typography flex={1}>Image</Typography>
+                <Typography flex={3}>Name</Typography>
+                <Typography flex={3}>Price</Typography>
+                <Typography flex={1}>Sl</Typography>
+              </Stack>
+              <Divider />
+              <Stack gap={2} my={2}>
+                {cart?.products.length ? (
+                  cart.products.map((item) => (
+                    <Stack
+                      key={item.product._id}
+                      direction={"row"}
+                      justifyContent={"space-between"}
+                      alignItems={"center"}
+                      spacing={3}
+                      padding={1}
+                    >
+                      <Stack direction={"row"} alignItems={"center"} gap={2}>
+                        <Link to="/cart">
+                          <img
+                            src={item.product.image}
+                            width={"40px"}
+                            height={"50px"}
+                            alt={item.product.title}
+                          />
+                        </Link>
+                        <Typography
+                          fontWeight={500}
+                          sx={{ textAlign: "center", width: "100%" }}
+                        >
+                          {item.product.title.substring(0, 10)}...
+                        </Typography>
+                      </Stack>
+                      <Typography
+                        fontWeight={500}
+                        sx={{ textAlign: "center", width: "100%" }}
+                      >
+                        {item.product.price}
+                      </Typography>
+                      <Typography fontWeight={500}>x{item.quantity}</Typography>
+                    </Stack>
+                  ))
+                ) : (
+                  <Typography>Giỏ hàng đang trống.</Typography>
+                )}
+              </Stack>
+              <Divider />
+              <Typography color="black" textAlign={"left"} mt={2}>
+                Total: {totalPrice} VND
+              </Typography>
+            </Box>
+          </Popover>
+        </div>
+      </Stack>
+    </Wrapper>
+  );
+};
+
+export default Header;
+
+const Wrapper = styled(Stack)({
+  height: 100,
+  padding: "0 50px",
+});
