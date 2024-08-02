@@ -29,7 +29,7 @@ const theme = createTheme({
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <LoadingProvider>cartQuantity is not defined
+      <LoadingProvider>
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <UserProvider>
