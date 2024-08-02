@@ -77,7 +77,7 @@ const Header = () => {
     >
       <img src="/logo.svg" alt="logo" />
       <Stack direction={"row"} gap={"75px"}>
-        {/* menu */}
+      
         {menus.map((menu, index) => (
           <Link to={menu.link} key={index}>
             <Typography fontWeight={"500"}>{menu.label}</Typography>
@@ -90,8 +90,12 @@ const Header = () => {
         </Link>
         <SearchIcon />
         <FavoriteBorderIcon />
-        <div onMouseEnter={handlePopoverOpen} >
-          <Badge badgeContent={cartQuantity} color="secondary">
+        <div onMouseEnter={handlePopoverOpen}
+          onMouseLeave={handlePopoverClose}
+          
+          
+        >
+          <Badge badgeContent={cartQuantity} color="secondary" >
             <img src="/cart.svg" alt="cart" />
           </Badge>
           {/* //render */}
@@ -110,18 +114,18 @@ const Header = () => {
             onClose={handlePopoverClose}
             disableRestoreFocus
           >
+            {/* gio hang */}
             <Box sx={{ p: 2, minWidth: 200 }}>
               <Typography variant="h6" gutterBottom>
                 Giỏ hàng
               </Typography>
               <Divider />
-            
-              <Stack direction={"row"} spacing={3} padding={1} fontWeight={600} >
+
+              <Stack direction={"row"} spacing={3} padding={1} fontWeight={600}>
                 <Typography flex={1}>Image</Typography>
                 <Typography flex={3}>Name</Typography>
                 <Typography flex={3}>Price</Typography>
                 <Typography flex={1}>Sl</Typography>
-                <Typography flex={1}>Action</Typography>
               </Stack>
               <Divider />
               <Stack gap={2} my={2}>
@@ -137,26 +141,27 @@ const Header = () => {
                     >
                       <Stack direction={"row"} alignItems={"center"} gap={2}>
                         <Link to="/cart">
-                        <img
-                          src={item.product.image}
-                          width={"40px"}
-                          height={"50px"}
-                          alt={item.product.title}
-                        /></Link>
-                        <Typography fontWeight={500} sx={{textAlign:'center' ,width:'100%'}}>
+                          <img
+                            src={item.product.image}
+                            width={"40px"}
+                            height={"50px"}
+                            alt={item.product.title}
+                          />
+                        </Link>
+                        <Typography
+                          fontWeight={500}
+                          sx={{ textAlign: "center", width: "100%" }}
+                        >
                           {item.product.title.substring(0, 10)}...
                         </Typography>
                       </Stack>
-                      <Typography fontWeight={500} sx={{textAlign:"center",width:'100%'}}>
+                      <Typography
+                        fontWeight={500}
+                        sx={{ textAlign: "center", width: "100%" }}
+                      >
                         {item.product.price}
                       </Typography>
                       <Typography fontWeight={500}>x{item.quantity}</Typography>
-                      <IconButton
-                        onClick={() => removeToCart(item.product._id)}
-                        
-                      >
-                        <DeleteIcon sx={{ color: "red" }} />
-                      </IconButton>
                     </Stack>
                   ))
                 ) : (
